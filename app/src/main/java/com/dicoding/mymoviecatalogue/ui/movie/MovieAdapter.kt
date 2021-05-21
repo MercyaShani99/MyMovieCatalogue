@@ -17,7 +17,7 @@ class MovieAdapter : RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
     private var listMoviep = ArrayList<Movie>()
 
     fun setMovie(moviep: List<Movie>) {
-        if (moviep.isNotEmpty()) return
+        if (moviep.isEmpty()) return
         listMoviep.clear()
         listMoviep.addAll(moviep)
     }

@@ -47,29 +47,28 @@ class MovieTvRepository private constructor(private val remoteDataSource: Remote
     }
 
     override fun getMovieDetail(id: Int): LiveData<Movie> {
-        val moviesIdResults = MutableLiveData<Movie>()
+        val moviewithIdResult = MutableLiveData<Movie>()
         remoteDataSource.getMoviePopular(object : RemoteDataSource.MovieCallback {
             override fun getMovieAsync(movie: List<ResultMovie>?) {
-                lateinit var moviep: Movie
                 if (movie != null) {
                     for (movieidRes in movie){
                         if (movieidRes.id == id) {
-                            moviep =
-                                Movie(
+                            val moviep = Movie(
                                 movieidRes.id,
                                 movieidRes.posterPath,
                                 movieidRes.overview,
                                 movieidRes.releaseDate,
                                 movieidRes.title,
                                 movieidRes.voteAverage
-                                )
+                            )
+                            moviewithIdResult.postValue(moviep)
+                            break
                         }
-                        moviesIdResults.postValue(moviep)
                     }
                 }
             }
         })
-        return moviesIdResults
+        return moviewithIdResult
     }
 
     override fun getTvPopular(): LiveData<List<TvShow>> {
@@ -102,12 +101,10 @@ class MovieTvRepository private constructor(private val remoteDataSource: Remote
         val tvIdResults = MutableLiveData<TvShow>()
         remoteDataSource.getTvPopular(object : RemoteDataSource.TvCallback {
             override fun getTvAsync(tv: List<ResultTvShow>?) {
-                lateinit var tvp : TvShow
                 if (tv != null) {
                     for (tvidRes in tv) {
                         if (tvidRes.id == id){
-                            tvp =
-                                TvShow(
+                            val tvp = TvShow(
                                     tvidRes.id,
                                     tvidRes.posterPath,
                                     tvidRes.overview,
@@ -115,8 +112,9 @@ class MovieTvRepository private constructor(private val remoteDataSource: Remote
                                     tvidRes.name,
                                     tvidRes.voteAverage
                                 )
+                            tvIdResults.postValue(tvp)
+                            break
                         }
-                        tvIdResults.postValue(tvp)
                     }
                 }
             }

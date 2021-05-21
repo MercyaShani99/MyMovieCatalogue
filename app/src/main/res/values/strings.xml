@@ -20,5 +20,6 @@
     <string name="average">Average</string>
     <string name="tv">Tv Show</string>
     <string name="movie">Movie</string>
+    <string name="image">Image</string>
 
 </resources>
