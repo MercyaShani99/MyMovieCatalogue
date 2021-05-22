@@ -17,7 +17,7 @@ class DetailViewModel(private val movieTvRepository: MovieTvRepository) : ViewMo
         this.id = id
     }
 
-    fun getMovie() : LiveData<Movie> = movieTvRepository.getMovieDetail(id)
+    fun getMovie(id:Int) : LiveData<Movie> = movieTvRepository.getMovieDetail(id)
 
-    fun getTvShow() : LiveData<TvShow> = movieTvRepository.getTvDetail(id)
+    fun getTvShow(id: Int) : LiveData<TvShow> = movieTvRepository.getTvDetail(id)
 }

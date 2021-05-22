@@ -43,12 +43,12 @@ class MovieTvDetailCourse : AppCompatActivity() {
             val movie = extras.getInt(EXTRA_MOVIES, 0)
             val tvs = extras.getInt(EXTRA_TV,0)
 
-            if(movie != null) {
+            if(movie != 0) {
                 activitydetailBinding.progressBar.visibility = View.VISIBLE
                 activitydetailBinding.nestedScrollView.visibility = View.INVISIBLE
 
                 viewModelProvider.setSelectedMovie(movie)
-                viewModelProvider.getMovie().observe(this, {movieEntities ->
+                viewModelProvider.getMovie(movie).observe(this, {movieEntities ->
                     activitydetailBinding.progressBar.visibility = View.GONE
                     activitydetailBinding.nestedScrollView.visibility = View.VISIBLE
 
@@ -59,7 +59,7 @@ class MovieTvDetailCourse : AppCompatActivity() {
                 activitydetailBinding.nestedScrollView.visibility = View.INVISIBLE
 
                 viewModelProvider.setSelectedTvs(tvs)
-                viewModelProvider.getTvShow().observe(this, {tvShowEntities ->
+                viewModelProvider.getTvShow(tvs).observe(this, {tvShowEntities ->
                     activitydetailBinding.progressBar.visibility = View.GONE
                     activitydetailBinding.nestedScrollView.visibility = View.VISIBLE
 
