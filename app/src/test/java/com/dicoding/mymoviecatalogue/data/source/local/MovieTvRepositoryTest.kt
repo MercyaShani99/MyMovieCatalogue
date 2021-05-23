@@ -46,12 +46,12 @@ class MovieTvRepositoryTest {
     @Test
     fun getMovieDetail() {
         doAnswer { invocation ->
-            (invocation.arguments[0] as RemoteDataSource.MovieCallback).getMovieAsync(moviesResponse)
+            (invocation.arguments[0] as RemoteDataSource.DetailCallback).getMovieDetailAsync(movieDetail)
             null
-        }.`when`(remote).getMoviePopular(any(), eq(movieId))
+        }.`when`(remote).getMovieDetail(any(), eq(movieId))
 
         val movieDetailEntities = LiveDataTestUtil.getValue(movieTvRepository.getMovieDetail(movieId))
-        verify(remote).getMoviePopular(any(), eq(movieId))
+        verify(remote).getMovieDetail(any(), eq(movieId))
         assertNotNull(movieDetailEntities)
         assertEquals(movieDetail.id, movieDetailEntities.id)
     }
@@ -72,12 +72,12 @@ class MovieTvRepositoryTest {
     @Test
     fun getTvDetail() {
         doAnswer { invocation ->
-            (invocation.arguments[0] as RemoteDataSource.TvCallback).getTvAsync(tvResponse)
+            (invocation.arguments[0] as RemoteDataSource.DetailTvCallback).getTvDetailAsync(tvShowDetail)
             null
-        }.`when`(remote).getTvPopular(any(), eq(tvShowId))
+        }.`when`(remote).getTvDetail(any(), eq(tvShowId))
 
         val tvShowDetailEntities = LiveDataTestUtil.getValue(movieTvRepository.getTvDetail(tvShowId))
-        verify(remote).getTvPopular(any(), eq(tvShowId))
+        verify(remote).getTvDetail(any(), eq(tvShowId))
         assertNotNull(tvShowDetailEntities)
         assertEquals(tvShowDetail.id, tvShowDetailEntities.id)
     }

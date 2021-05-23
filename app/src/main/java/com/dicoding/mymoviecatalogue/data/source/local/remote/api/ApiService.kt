@@ -1,6 +1,8 @@
 package com.dicoding.mymoviecatalogue.data.source.local.remote.api
 
+import com.dicoding.mymoviecatalogue.data.source.local.remote.response.MovieDetailResponse
 import com.dicoding.mymoviecatalogue.data.source.local.remote.response.MovieRemoteResponse
+import com.dicoding.mymoviecatalogue.data.source.local.remote.response.TvDetailResponse
 import com.dicoding.mymoviecatalogue.data.source.local.remote.response.TvRemoteResponse
 import retrofit2.Call
 import retrofit2.http.GET
@@ -13,22 +15,22 @@ interface ApiService {
         @Query("api_key") apiKey:String
     ): Call<MovieRemoteResponse>
 
-    @GET("tv/{tv_id}?api_key=c44284fb2fadf0bfb7e77ef1805b48cb&language=en-US")
+    @GET("movie/{movie_id}")
     fun getMovieDetail(
-        @Path("id") id: Int,
+        @Path("movie_id") id: Int,
         @Query("api_key") apiKey:String
-    ): Call<MovieRemoteResponse>
+    ): Call<MovieDetailResponse>
 
     @GET("tv/popular")
     fun getTvPopular(
         @Query("api_key") apiKey: String
     ): Call<TvRemoteResponse>
 
-    @GET("tv/{tv_id}?api_key=c44284fb2fadf0bfb7e77ef1805b48cb&language=en-US")
+    @GET("tv/{tv_id}")
     fun getTvDetail(
-        @Path("id") id: Int,
+        @Path("tv_id") id: Int,
         @Query("api_key") apiKey:String
-    ): Call<TvRemoteResponse>
+    ): Call<TvDetailResponse>
 
 }
 

@@ -2,8 +2,10 @@ package com.dicoding.mymoviecatalogue.utils
 
 import com.dicoding.mymoviecatalogue.data.source.local.Movie
 import com.dicoding.mymoviecatalogue.data.source.local.TvShow
+import com.dicoding.mymoviecatalogue.data.source.local.remote.response.MovieDetailResponse
 import com.dicoding.mymoviecatalogue.data.source.local.remote.response.ResultMovie
 import com.dicoding.mymoviecatalogue.data.source.local.remote.response.ResultTvShow
+import com.dicoding.mymoviecatalogue.data.source.local.remote.response.TvDetailResponse
 
 object DataDummy {
     fun getMoviePopular(): List<Movie> {
@@ -144,8 +146,8 @@ object DataDummy {
         )
     }
 
-    fun getMovieDetailResponse(): ResultMovie {
-        return ResultMovie(
+    fun getMovieDetailResponse(): MovieDetailResponse {
+        return MovieDetailResponse(
             id = 567189,
             posterPath = "/fPGeS6jgdLovQAKunNHX8l0avCy.jpg",
             releaseDate = "2021-04-29",
@@ -155,8 +157,8 @@ object DataDummy {
         )
     }
 
-    fun getTvShowDetailResponse(): ResultTvShow {
-        return ResultTvShow(
+    fun getTvShowDetailResponse(): TvDetailResponse {
+        return TvDetailResponse(
             id = 88396,
             posterPath = "/b0WmHGc8LHTdGCVzxRb3IBMur57.jpg",
             firstAirDate = "2021-04-23",

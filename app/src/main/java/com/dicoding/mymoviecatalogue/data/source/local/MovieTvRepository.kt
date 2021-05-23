@@ -4,8 +4,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.dicoding.mymoviecatalogue.data.source.local.remote.LocalDataSource
 import com.dicoding.mymoviecatalogue.data.source.local.remote.RemoteDataSource
+import com.dicoding.mymoviecatalogue.data.source.local.remote.response.MovieDetailResponse
 import com.dicoding.mymoviecatalogue.data.source.local.remote.response.ResultMovie
 import com.dicoding.mymoviecatalogue.data.source.local.remote.response.ResultTvShow
+import com.dicoding.mymoviecatalogue.data.source.local.remote.response.TvDetailResponse
 
 class MovieTvRepository private constructor(private val remoteDataSource: RemoteDataSource) :
     LocalDataSource {
@@ -48,26 +50,21 @@ class MovieTvRepository private constructor(private val remoteDataSource: Remote
 
     override fun getMovieDetail(id: Int): LiveData<Movie> {
         val moviewithIdResult = MutableLiveData<Movie>()
-        remoteDataSource.getMoviePopular(object : RemoteDataSource.MovieCallback {
-            override fun getMovieAsync(movie: List<ResultMovie>?) {
-                if (movie != null) {
-                    for (movieidRes in movie){
-                        if (movieidRes.id == id) {
-                            val moviep = Movie(
-                                movieidRes.id,
-                                movieidRes.posterPath,
-                                movieidRes.overview,
-                                movieidRes.releaseDate,
-                                movieidRes.title,
-                                movieidRes.voteAverage
-                            )
-                            moviewithIdResult.postValue(moviep)
-                            break
-                        }
-                    }
+        remoteDataSource.getMovieDetail(object : RemoteDataSource.DetailCallback {
+            override fun getMovieDetailAsync(movieDetail: MovieDetailResponse) {
+                val moviep = movieDetail.let {
+                    Movie(
+                        it.id,
+                        it.posterPath,
+                        it.overview,
+                        it.releaseDate,
+                        it.title,
+                        it.voteAverage
+                    )
                 }
+                moviewithIdResult.postValue(moviep)
             }
-        })
+        }, id)
         return moviewithIdResult
     }
 
@@ -99,26 +96,21 @@ class MovieTvRepository private constructor(private val remoteDataSource: Remote
 
     override fun getTvDetail(id: Int): LiveData<TvShow> {
         val tvIdResults = MutableLiveData<TvShow>()
-        remoteDataSource.getTvPopular(object : RemoteDataSource.TvCallback {
-            override fun getTvAsync(tv: List<ResultTvShow>?) {
-                if (tv != null) {
-                    for (tvidRes in tv) {
-                        if (tvidRes.id == id){
-                            val tvp = TvShow(
-                                    tvidRes.id,
-                                    tvidRes.posterPath,
-                                    tvidRes.overview,
-                                    tvidRes.firstAirDate,
-                                    tvidRes.name,
-                                    tvidRes.voteAverage
-                                )
-                            tvIdResults.postValue(tvp)
-                            break
-                        }
-                    }
+        remoteDataSource.getTvDetail(object : RemoteDataSource.DetailTvCallback {
+            override fun getTvDetailAsync(tvDetail: TvDetailResponse) {
+                val tvp = tvDetail.let {
+                    TvShow(
+                        it.id,
+                        it.posterPath,
+                        it.overview,
+                        it.firstAirDate,
+                        it.name,
+                        it.voteAverage
+                    )
                 }
+                tvIdResults.postValue(tvp)
             }
-        })
+        }, id)
         return tvIdResults
     }
 }
